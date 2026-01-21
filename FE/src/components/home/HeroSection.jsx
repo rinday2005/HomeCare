@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CheckCircle } from "lucide-react";
+import { heroImages } from "@/data/home";
 
 const HeroSection = () => {
   return (
@@ -56,11 +57,25 @@ const HeroSection = () => {
           {/* Right Image */}
           <div className="relative animate-fade-in" style={{ animationDelay: "0.2s" }}>
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-              <img
-                src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=600&h=500&fit=crop"
-                alt="Caregiver with elderly patient"
-                className="w-full h-[500px] object-cover"
-              />
+             <div
+  className="relative rounded-2xl overflow-hidden shadow-2xl animate-fade-in"
+  style={{ animationDelay: "0.2s" }}
+>
+  <div className="relative w-full h-[500px] overflow-hidden">
+    {heroImages.map((img, index) => (
+      <img
+        key={index}
+        src={img}
+        alt="Caregiver with elderly patient"
+        className="absolute inset-0 w-full h-full object-cover animate-hero-slide"
+        style={{
+          animationDelay: `${index * 4}s`,
+        }}
+      />
+    ))}
+  </div>
+</div>
+
               
               {/* Status Card Overlay */}
               <div className="absolute bottom-6 right-6 bg-background/95 backdrop-blur-sm rounded-xl p-4 shadow-lg flex items-center gap-3">

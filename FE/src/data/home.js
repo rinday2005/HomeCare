@@ -11,7 +11,11 @@ import {
   Briefcase,
   Heart,
   Award,
+  Home,
+  CheckCircle2,
+  BarChart3
 } from "lucide-react";
+
 
 //FeatureSection------------------------------------------------------------------------------
 export const features = [
@@ -43,6 +47,13 @@ export const features = [
     highlight: false,
     colSpan: "md:col-span-2",
   },
+];
+
+//HeroSection---------------------------------------------------------------------------------
+export const heroImages = [
+  "/images/herosection.jpeg",
+  "/images/herosection1.jpg",
+  "/images/herosection2.jpg",
 ];
 
 
@@ -180,6 +191,13 @@ export const roleContent = {
 };
 
 
+export const roles = [
+    { id: "families", label: "For Families", icon: Home },
+    { id: "admins", label: "For Admins", icon: BarChart3 },
+    { id: "caregivers", label: "For Caregivers", icon: Heart }
+  ];
+
+
 //Pricing Page ------------------------------------------------------------------------------------------
 export const plans = [
   {
@@ -254,33 +272,42 @@ export const faqs = [
 export const services = [
   {
     icon: Activity,
+    image: "/images/service1.webp",
     title: "Daily Health Monitoring",
-    description: "Routine check-ins and vitals tracking to ensure daily wellness. Our caregivers are trained to identify early warning signs and maintain detailed health logs.",
+    description:
+      "Routine check-ins and vitals tracking to ensure daily wellness. Our caregivers are trained to identify early warning signs and maintain detailed health logs.",
     tag: "DAILY SERVICE",
-    tagColor: "bg-primary/10 text-primary"
+    tagColor: "bg-primary/10 text-primary",
   },
   {
     icon: Heart,
+    image: "/images/service2.webp",
     title: "Specialized Post-Op Care",
-    description: "Professional rehabilitation and clinical wound care for a smooth recovery at home. We coordinate closely with your surgical team for optimal outcomes.",
+    description:
+      "Professional rehabilitation and clinical wound care for a smooth recovery at home. We coordinate closely with your surgical team for optimal outcomes.",
     tag: "CLINICAL",
-    tagColor: "bg-cyan-100 text-cyan-600"
+    tagColor: "bg-cyan-100 text-cyan-600",
   },
   {
     icon: Users,
+    image: "/images/service3.webp",
     title: "Elderly Companionship",
-    description: "Social interaction and mental health support for a fulfilling life. We provide engaging activities, conversation, and emotional support to combat isolation.",
+    description:
+      "Social interaction and mental health support for a fulfilling life. We provide engaging activities, conversation, and emotional support to combat isolation.",
     tag: "WELLNESS",
-    tagColor: "bg-orange-100 text-orange-600"
+    tagColor: "bg-orange-100 text-orange-600",
   },
   {
     icon: Award,
+    image: "/images/service4.webp",
     title: "Medication Management",
-    description: "Safe scheduling and administration for absolute peace of mind. We ensure medications are taken on time, every time, reducing risks of error.",
+    description:
+      "Safe scheduling and administration for absolute peace of mind. We ensure medications are taken on time, every time, reducing risks of error.",
     tag: "SAFETY",
-    tagColor: "bg-green-100 text-green-600"
-  }
+    tagColor: "bg-green-100 text-green-600",
+  },
 ];
+
 
 export const stats = [
   { icon: Heart, label: "Happy Families", value: "500+" },
