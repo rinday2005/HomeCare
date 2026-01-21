@@ -3,16 +3,11 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { UserPlus, ShieldCheck, Activity, Users, Settings, Briefcase, Heart, Pill, Home, CheckCircle2, BarChart3 } from "lucide-react";
 import { roleContent } from "@/data/home";
+import { roles } from "@/data/home";
 
 
 const HowItWorks = () => {
   const [activeRole, setActiveRole] = useState("families");
-
-  const roles = [
-    { id: "families", label: "For Families", icon: Home },
-    { id: "admins", label: "For Admins", icon: BarChart3 },
-    { id: "caregivers", label: "For Caregivers", icon: Heart }
-  ];
 
   return (
     <div className="flex flex-col min-h-screen bg-background-light dark:bg-background-dark">
@@ -22,7 +17,7 @@ const HowItWorks = () => {
           <div 
             className="flex min-h-[300px] flex-col gap-6 bg-cover bg-center bg-no-repeat rounded-xl items-center justify-center p-8 text-center"
             style={{
-              backgroundImage: 'linear-gradient(rgba(14, 25, 27, 0.7) 0%, rgba(14, 25, 27, 0.85) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBpZ2SNSSSEffirLZ2tbTS4bNdfDvV30QvGzIJ5Byfnw9F1mvrHMzi21RfyIviYHezwtIigsMOQj6Ndcp62CrjCY0gv56FzxpZzKYP-2nc66aS8c831ZS98A3c3kIg3WgLIb6o2PPTdKJB6e7PI2oI-J8HQ8EGK40kCdlXkJbYw7EFEaqrJu4a4PrFekiDPTZ8WzzSDHcC9GYVhldgvFYnukbuCoPY0nZT8cZTSpDwmku-KiElj_yRCgz2rrT-VoOdhM0iJK1h57GGY")'
+              backgroundImage: 'linear-gradient(rgba(14, 25, 27, 0.7) 0%, rgba(14, 25, 27, 0.85) 100%), url("/images/banner2.png")'
             }}
           >
             <div className="flex flex-col gap-4 max-w-2xl">
