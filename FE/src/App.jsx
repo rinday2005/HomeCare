@@ -14,8 +14,8 @@ import Services from "./pages/Services";
 import Pricing from "./pages/Pricing";
 import HowItWorks from "./pages/HowItWorks";
 import Contact from "./pages/Contact";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Login from "./pages/Auth/Login";
+import Register from "./pages/Auth/Register";
 import NotFound from "./pages/NotFound";
 
 // Admin Pages
