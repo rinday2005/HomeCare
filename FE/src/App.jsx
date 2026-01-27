@@ -14,11 +14,11 @@ import PublicLayout from "./components/layout/PublicLayout";
 import AdminLayout from "./components/layout/AdminLayout";
 
 // Public Pages
-
 import Index from "./pages/Public/HomePublic";
 import Services from "./pages/Public/Services";
 import Pricing from "./pages/Public/Pricing";
 import HowItWorks from "./pages/Public/HowItWorks";
+import OurCaregivers from "./pages/Public/OurCaregivers";
 import Contact from "./pages/Public/Contact";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
@@ -58,6 +58,7 @@ const App = () => (
                 <Route path="/pricing" element={<Pricing />} />
                 <Route path="/how-it-works" element={<HowItWorks />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/caregivers" element={<OurCaregivers />} />
               </Route>
 
               {/* Auth Routes (without layout) */}
