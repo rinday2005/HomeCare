@@ -9,14 +9,18 @@ import PublicLayout from "./components/layout/PublicLayout";
 import AdminLayout from "./components/layout/AdminLayout";
 
 // Public Pages
-import Index from "./pages/Index";
-import Services from "./pages/Services";
-import Pricing from "./pages/Pricing";
-import HowItWorks from "./pages/HowItWorks";
-import Contact from "./pages/Contact";
+import Index from "./pages/Public/HomePublic";
+import Services from "./pages/Public/Services";
+import Pricing from "./pages/Public/Pricing";
+import HowItWorks from "./pages/Public/HowItWorks";
+import Contact from "./pages/Public/Contact";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
-import NotFound from "./pages/NotFound";
+import NotFound from "./pages/Public/NotFound";
+
+// Family Pages
+import FamilyLayout from "./components/layout/FamilyLayout";
+import FamilyWelcome from "./pages/Family/Welcome";
 
 // Admin Pages
 import Dashboard from "./pages/admin/Dashboard";
@@ -45,7 +49,7 @@ const App = () => (
             <Route path="/how-it-works" element={<HowItWorks />} />
             <Route path="/contact" element={<Contact />} />
           </Route>
-          
+
           {/* Auth Routes (without layout) */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -60,6 +64,11 @@ const App = () => (
             <Route path="reports" element={<Reports />} />
             <Route path="reports/care-log/:id" element={<CareLogDetail />} />
             <Route path="payments" element={<Payments />} />
+          </Route>
+
+          {/* Family Routes */}
+          <Route path="/family" element={<FamilyLayout />}>
+            <Route index element={<FamilyWelcome />} />
           </Route>
 
           {/* Catch-all */}
