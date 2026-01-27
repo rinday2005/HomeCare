@@ -13,16 +13,16 @@ import Loader from './components/ui/loader';
 import PublicLayout from "./components/layout/PublicLayout";
 import AdminLayout from "./components/layout/AdminLayout";
 
-// Public Pages (Lazy Loaded)
-const HomePublic = lazy(() => import("./pages/Public/HomePublic"));
-const Services = lazy(() => import("./pages/Public/Services"));
-const Pricing = lazy(() => import("./pages/Public/Pricing"));
-const HowItWorks = lazy(() => import("./pages/Public/HowItWorks"));
-const Contact = lazy(() => import("./pages/Public/Contact"));
-const Login = lazy(() => import("./pages/Auth/Login"));
-const Register = lazy(() => import("./pages/Auth/Register"));
-const NotFound = lazy(() => import("./pages/Public/NotFound"));
-const OurCaregivers = lazy(() => import("./pages/Public/OurCaregivers"));
+// Public Pages
+import Index from "./pages/Public/HomePublic";
+import Services from "./pages/Public/Services";
+import Pricing from "./pages/Public/Pricing";
+import HowItWorks from "./pages/Public/HowItWorks";
+import OurCaregivers from "./pages/Public/OurCaregivers";
+import Contact from "./pages/Public/Contact";
+import Login from "./pages/Auth/Login";
+import Register from "./pages/Auth/Register";
+import NotFound from "./pages/Public/NotFound";
 
 // Admin Pages (Lazy Loaded)
 const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
@@ -53,12 +53,12 @@ const App = () => (
             <Routes>
               {/* Public Routes */}
               <Route element={<PublicLayout />}>
-                <Route path="/" element={<HomePublic />} />
-                <Route path="/caregivers" element={<OurCaregivers />} />
+                <Route path="/" element={<Index />} />
                 <Route path="/services" element={<Services />} />
                 <Route path="/pricing" element={<Pricing />} />
                 <Route path="/how-it-works" element={<HowItWorks />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/caregivers" element={<OurCaregivers />} />
               </Route>
 
               {/* Auth Routes (without layout) */}
