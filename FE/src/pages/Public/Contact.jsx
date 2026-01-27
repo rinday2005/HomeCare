@@ -5,6 +5,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { MapPin, Phone, Mail, Clock, Lock, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { WorldMap } from "@/components/ui/world-map";
+
 
 const Contact = () => {
   const { toast } = useToast();
@@ -67,16 +69,46 @@ const Contact = () => {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative py-20 rounded-3xl mx-4 mt-4 overflow-hidden bg-gradient-to-r from-primary to-primary/80 text-white">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1200')] bg-cover bg-center opacity-20" />
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            Get in Touch with Our Care Team
+      {/* World Map Hero Section */}
+      <section className="relative py-20 rounded-3xl mx-4 mt-4 overflow-hidden bg-white dark:bg-[#101f22]">
+        <div className="container mx-auto px-4 text-center relative z-10 mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-[#1b140d] dark:text-white">
+            Global Reach, Local Care
           </h1>
-          <p className="text-lg text-white/90 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Whether you're seeking care for a loved one or have a question about our
             services, our team is here to support you 24/7.
           </p>
+        </div>
+        <div className="max-w-5xl mx-auto">
+          <WorldMap
+            dots={[
+              {
+                start: { lat: 64.2008, lng: -149.4937 }, // Alaska (Fairbanks)
+                end: { lat: 34.0522, lng: -118.2437 }, // Los Angeles
+              },
+              {
+                start: { lat: 64.2008, lng: -149.4937 }, // Alaska (Fairbanks)
+                end: { lat: -15.7975, lng: -47.8919 }, // Brazil (Brasília)
+              },
+              {
+                start: { lat: -15.7975, lng: -47.8919 }, // Brazil (Brasília)
+                end: { lat: 38.7223, lng: -9.1393 }, // Lisbon
+              },
+              {
+                start: { lat: 51.5074, lng: -0.1278 }, // London
+                end: { lat: 28.6139, lng: 77.209 }, // New Delhi
+              },
+              {
+                start: { lat: 28.6139, lng: 77.209 }, // New Delhi
+                end: { lat: 43.1332, lng: 131.9113 }, // Vladivostok
+              },
+              {
+                start: { lat: 28.6139, lng: 77.209 }, // New Delhi
+                end: { lat: -1.2921, lng: 36.8219 }, // Nairobi
+              },
+            ]}
+          />
         </div>
       </section>
 
