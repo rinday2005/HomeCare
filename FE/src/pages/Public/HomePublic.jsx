@@ -21,6 +21,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import ScrollAnimation from "@/components/ui/scroll-animation";
+import { PinContainer } from "@/components/ui/3d-pin";
 
 const HomePublic = () => {
   const [api, setApi] = useState(null);
@@ -99,8 +100,6 @@ const HomePublic = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {features.map((feature, index) => {
-              // Map icon string to Lucide component if needed, or stick to passed icon
-              // For now assuming we manually map based on index or title since data has strings like 'schedule'
               let Icon = Clock;
               if (feature.title.includes("safety")) Icon = ShieldAlert;
               if (feature.title.includes("expertise")) Icon = Stethoscope;
@@ -187,14 +186,32 @@ const HomePublic = () => {
                 ))}
               </div>
             </div>
-            <div className="lg:w-1/2">
+            <div className="lg:w-1/2 h-[600px] flex items-center justify-center">
               <ScrollAnimation animation="slide-left">
-                <div className="relative rounded-[32px] overflow-hidden shadow-2xl bg-[#fdf2e3]">
-                  <img
-                    alt="Caregiver assisting elderly person with a tablet"
-                    className="w-full h-auto block"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8Vjzwp7i3liSVEmJGvDsZgnMbLLDrPasPrikY_3GvPZ2Ig6o7jM1L2fUN5mhk5Z4s5KVw2VrLyUfCvm4EK79xMaI2e3iQin72x-rO9bnQkPlo5sNXYjt10Wrr1144tGpJ_JJ74CxrfGnRyPX2IzcLai67HUfVJVReEpyDtolakcSregdCxyjFPk6IMfR6jl43a58ywAG46UZQDlDcjs2t9Cl3S29zMhU7HwsgNtLgXWs3q0yS2RGY4oL4Lkdycax0vCxGAP_q94z9"
-                  />
+                <div className="flex items-center justify-center">
+                  <PinContainer
+                    title="How It Works"
+                    href="./how-it-works"
+                    className="bg-[#e6f8fb] border-none"
+                  >
+                    <div className="flex basis-full flex-col p-4 tracking-tight text-gray-800 sm:basis-1/2 w-[30rem] h-[30rem]">
+                      <h3 className="max-w-xs !pb-2 !m-0 font-bold text-xl text-gray-900">
+                        Expert Caregivers
+                      </h3>
+                      <div className="text-base !m-0 !p-0 font-normal">
+                        <span className="text-gray-600">
+                          Providing professional home care with empathy and expertise.
+                        </span>
+                      </div>
+                      <div className="flex flex-1 w-full rounded-2xl mt-4 overflow-hidden relative shadow-inner">
+                        <img
+                          alt="Caregiver assisting elderly person with a tablet"
+                          className="w-full h-full object-cover absolute inset-0 transform scale-105 hover:scale-110 transition-transform duration-500"
+                          src="/images/how.jpg"
+                        />
+                      </div>
+                    </div>
+                  </PinContainer>
                 </div>
               </ScrollAnimation>
             </div>
