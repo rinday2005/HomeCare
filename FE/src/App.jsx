@@ -3,12 +3,18 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "next-themes";
+import ScrollToTop from "./components/ScrollToTop";
+
+import { Suspense, lazy } from 'react';
+import Loader from './components/ui/loader';
 
 // Layouts
 import PublicLayout from "./components/layout/PublicLayout";
 import AdminLayout from "./components/layout/AdminLayout";
 
 // Public Pages
+
 import Index from "./pages/Public/HomePublic";
 import Services from "./pages/Public/Services";
 import Pricing from "./pages/Public/Pricing";
@@ -18,64 +24,70 @@ import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import NotFound from "./pages/Public/NotFound";
 
-// Family Pages
-import FamilyLayout from "./components/layout/FamilyLayout";
-import FamilyWelcome from "./pages/Family/Welcome";
+// Admin Pages (Lazy Loaded)
+const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
+const Patients = lazy(() => import("./pages/admin/Patients"));
+const Caregivers = lazy(() => import("./pages/admin/Caregivers"));
+const Requests = lazy(() => import("./pages/admin/Requests"));
+const Schedule = lazy(() => import("./pages/admin/Schedule"));
+const Reports = lazy(() => import("./pages/admin/Reports"));
+const CareLogDetail = lazy(() => import("./pages/admin/CareLogDetail"));
+const Payments = lazy(() => import("./pages/admin/Payments"));
 
-// Admin Pages
-import Dashboard from "./pages/admin/Dashboard";
-import Patients from "./pages/admin/Patients";
-import Caregivers from "./pages/admin/Caregivers";
-import Requests from "./pages/admin/Requests";
-import Schedule from "./pages/admin/Schedule";
-import Reports from "./pages/admin/Reports";
-import CareLogDetail from "./pages/admin/CareLogDetail";
-import Payments from "./pages/admin/Payments";
+// Family Pages (Lazy Loaded)
+const FamilyLayout = lazy(() => import("./components/layout/FamilyLayout"));
+const FamilyWelcome = lazy(() => import("./pages/Family/Welcome"));
+
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          {/* Public Routes */}
-          <Route element={<PublicLayout />}>
-            <Route path="/" element={<Index />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/pricing" element={<Pricing />} />
-            <Route path="/how-it-works" element={<HowItWorks />} />
-            <Route path="/contact" element={<Contact />} />
-          </Route>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <ScrollToTop />
+          <Suspense fallback={<Loader />}>
+            <Routes>
+              {/* Public Routes */}
+              <Route element={<PublicLayout />}>
+                <Route path="/" element={<Index />} />
+                <Route path="/services" element={<Services />} />
+                <Route path="/pricing" element={<Pricing />} />
+                <Route path="/how-it-works" element={<HowItWorks />} />
+                <Route path="/contact" element={<Contact />} />
+              </Route>
 
-          {/* Auth Routes (without layout) */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+              {/* Auth Routes (without layout) */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
 
-          {/* Admin Routes */}
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<Dashboard />} />
-            <Route path="patients" element={<Patients />} />
-            <Route path="caregivers" element={<Caregivers />} />
-            <Route path="requests" element={<Requests />} />
-            <Route path="schedule" element={<Schedule />} />
-            <Route path="reports" element={<Reports />} />
-            <Route path="reports/care-log/:id" element={<CareLogDetail />} />
-            <Route path="payments" element={<Payments />} />
-          </Route>
+              {/* Admin Routes */}
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route index element={<Dashboard />} />
+                <Route path="patients" element={<Patients />} />
+                <Route path="caregivers" element={<Caregivers />} />
+                <Route path="requests" element={<Requests />} />
+                <Route path="schedule" element={<Schedule />} />
+                <Route path="reports" element={<Reports />} />
+                <Route path="reports/care-log/:id" element={<CareLogDetail />} />
+                <Route path="payments" element={<Payments />} />
+              </Route>
 
-          {/* Family Routes */}
-          <Route path="/family" element={<FamilyLayout />}>
-            <Route index element={<FamilyWelcome />} />
-          </Route>
+              {/* Family Routes */}
+              <Route path="/family" element={<FamilyLayout />}>
+                <Route index element={<FamilyWelcome />} />
+              </Route>
 
-          {/* Catch-all */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+              {/* Catch-all */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </BrowserRouter>
+      </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 
