@@ -34,6 +34,10 @@ const Reports = lazy(() => import("./pages/admin/Reports"));
 const CareLogDetail = lazy(() => import("./pages/admin/CareLogDetail"));
 const Payments = lazy(() => import("./pages/admin/Payments"));
 
+// Family Pages (Lazy Loaded)
+const FamilyLayout = lazy(() => import("./components/layout/FamilyLayout"));
+const FamilyWelcome = lazy(() => import("./pages/Family/Welcome"));
+
 
 const queryClient = new QueryClient();
 
@@ -71,6 +75,11 @@ const App = () => (
                 <Route path="reports" element={<Reports />} />
                 <Route path="reports/care-log/:id" element={<CareLogDetail />} />
                 <Route path="payments" element={<Payments />} />
+              </Route>
+
+              {/* Family Routes */}
+              <Route path="/family" element={<FamilyLayout />}>
+                <Route index element={<FamilyWelcome />} />
               </Route>
 
               {/* Catch-all */}
