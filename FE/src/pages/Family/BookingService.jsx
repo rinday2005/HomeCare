@@ -1,0 +1,184 @@
+import React, { useState } from 'react';
+import { SERVICES } from '../../data/Family/booking';
+import ServiceBookingModal from './ServiceBookingModal';
+import ScrollAnimation from "@/components/ui/scroll-animation";
+
+const categories = ['Daily Care', 'Specialized Medical', 'Companionship'];
+
+const BookingService = () => {
+    const [activeTab, setActiveTab] = useState('Daily Care');
+    const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+    const [selectedService, setSelectedService] = useState(null);
+
+    const handleBookService = (service) => {
+        setSelectedService(service);
+        setIsBookingModalOpen(true);
+    };
+
+    return (
+        <div className="font-['Public_Sans'] space-y-8 pb-12 pt-4 bg-transparent animate-fade-in-up">
+
+            {/* 1. Header & Search - Clean Split */}
+            <div className="flex flex-col xl:flex-row justify-between items-end gap-6 px-2">
+                <div>
+                    <div className="flex items-center gap-2 mb-2">
+                        <span className="material-symbols-outlined text-[#5fa5ba] text-2xl">medical_services</span>
+                        <h1 className="text-3xl font-medium text-stone-900 tracking-tight">Service Marketplace</h1>
+                    </div>
+                    <p className="text-stone-500 font-medium max-w-lg">Browse and book professional care services for your family members.</p>
+                </div>
+
+                {/* Search Bar */}
+                <div className="w-full xl:w-auto min-w-[300px] 2xl:min-w-[400px]">
+                    <div className="relative group">
+                        <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-stone-400 group-focus-within:text-[#5fa5ba] transition-colors">search</span>
+                        <input
+                            className="w-full bg-white border border-stone-200 rounded-full py-3 pl-12 pr-4 focus:ring-2 focus:ring-[#99C5D3] focus:border-transparent outline-none text-stone-800 placeholder:text-stone-400 transition-all shadow-sm"
+                            placeholder="Find a service..."
+                            type="text"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            {/* 2. Main Content Surface */}
+            <ScrollAnimation animation="fade-up">
+                <div className="bg-white rounded-[2rem] border border-stone-200 shadow-sm relative min-h-[600px] flex flex-col md:flex-row items-start">
+
+                    {/* Left Sidebar: Categories */}
+                    <div className="w-full md:w-64 border-b md:border-b-0 md:border-r border-stone-100 bg-stone-50/50 p-6 flex flex-col gap-2 md:sticky md:top-24 rounded-t-[2rem] md:rounded-tr-none md:rounded-l-[2rem]">
+                        <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-2 px-2">Categories</h3>
+                        {categories.map((cat) => (
+                            <button
+                                key={cat}
+                                onClick={() => setActiveTab(cat)}
+                                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all text-left ${activeTab === cat ? 'bg-[#5fa5ba] text-white shadow-md' : 'text-stone-600 hover:bg-stone-100'}`}
+                            >
+                                <span className="material-symbols-outlined text-lg">
+                                    {cat === 'Daily Care' ? 'wb_sunny' : cat === 'Specialized Medical' ? 'stethoscope' : 'diversity_1'}
+                                </span>
+                                {cat}
+                            </button>
+                        ))}
+
+                        <div className="mt-8 p-4 bg-[#E0F2F1] rounded-2xl border border-[#B2EBF2] hidden md:block">
+                            <div className="flex items-center gap-2 mb-2 text-[#00695C]">
+                                <span className="material-symbols-outlined">verified_user</span>
+                                <span className="font-bold text-xs uppercase tracking-wide">Guarantee</span>
+                            </div>
+                            <p className="text-[11px] text-[#004D40] leading-relaxed font-medium">
+                                All our caregivers are certified and background-checked for your peace of mind.
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Right Content: Services List */}
+                    <div className="flex-1 p-0">
+                        {/* List Header */}
+                        <div className="px-6 py-4 border-b border-stone-100 flex justify-between items-center bg-white sticky top-0 z-10">
+                            <h2 className="text-lg font-bold text-stone-900">{activeTab} Services</h2>
+                            <div className="flex items-center gap-2 text-xs font-bold text-stone-400">
+                                <span>Sort by:</span>
+                                <button className="flex items-center gap-1 text-stone-600 hover:text-[#5fa5ba]">
+                                    Recommended <span className="material-symbols-outlined text-sm">expand_more</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Services List Items */}
+                        <div className="divide-y divide-story-100">
+                            {SERVICES.filter(service => service.category === activeTab).map((service, index) => (
+                                <div key={service.id} className="p-6 md:p-8 flex flex-col md:flex-row gap-6 items-start md:items-center hover:bg-stone-50 transition-colors group relative">
+                                    {/* Thumbnail - Compact */}
+                                    <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-stone-200 shrink-0 overflow-hidden relative shadow-inner">
+                                        <img src={service.image} alt={service.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                                        {service.recommended && (
+                                            <div className="absolute top-0 right-0 bg-[#5fa5ba] w-6 h-6 flex items-center justify-center rounded-bl-xl">
+                                                <span className="material-symbols-outlined text-white text-[14px]">star</span>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* Content */}
+                                    <div className="flex-1 min-w-0">
+                                        <div className="flex items-start justify-between mb-2">
+                                            <div>
+                                                <h3 className="text-lg font-bold text-stone-900 group-hover:text-[#5fa5ba] transition-colors">{service.name}</h3>
+                                                <div className="flex items-center gap-2 mt-1">
+                                                    <span className="px-2 py-0.5 rounded-full bg-stone-100 text-stone-500 text-[10px] font-bold uppercase tracking-wide border border-stone-200">
+                                                        {service.unit}
+                                                    </span>
+                                                    {service.recommended && (
+                                                        <span className="flex items-center gap-1 text-[10px] font-bold text-orange-500">
+                                                            <span className="material-symbols-outlined text-[12px] fill-current">star</span>
+                                                            Top Rated
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            <div className="text-right md:hidden">
+                                                <p className="text-xl font-black text-stone-900">${service.price}</p>
+                                            </div>
+                                        </div>
+
+                                        {/* Tags/Features as Icons */}
+                                        <div className="flex flex-wrap gap-x-4 gap-y-2 mt-3">
+                                            {service.features.slice(0, 3).map((feature, idx) => (
+                                                <div key={idx} className="flex items-center gap-1.5 text-xs text-stone-500 font-medium">
+                                                    <span className="material-symbols-outlined text-[#5fa5ba] text-[16px]">check_small</span>
+                                                    <span>{feature}</span>
+                                                </div>
+                                            ))}
+                                            {service.features.length > 3 && (
+                                                <span className="text-xs text-stone-400 font-medium self-center">+{service.features.length - 3} more</span>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* Action - Right Side */}
+                                    <div className="flex items-center gap-6 w-full md:w-auto justify-between md:justify-end mt-4 md:mt-0 pl-0 md:pl-6 md:border-l border-stone-100">
+                                        <div className="hidden md:block text-right">
+                                            <p className="text-2xl font-black text-stone-900 tracking-tight">${service.price}</p>
+                                            <p className="text-[10px] text-stone-400 font-bold uppercase">Per Session</p>
+                                        </div>
+
+                                        <button
+                                            onClick={() => handleBookService(service)}
+                                            className="h-12 w-12 rounded-full border-2 border-stone-200 flex items-center justify-center text-stone-400 hover:border-[#5fa5ba] hover:bg-[#5fa5ba] hover:text-white transition-all group/btn shadow-sm"
+                                        >
+                                            <span className="material-symbols-outlined group-hover/btn:scale-110 transition-transform">add</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </ScrollAnimation>
+
+            {/* Floating Review Cart */}
+            <ScrollAnimation animation="scale-up" className="fixed bottom-8 right-8 z-50">
+                <div className="relative">
+                    <button className="flex items-center gap-4 bg-stone-900 text-white px-6 py-3 rounded-full shadow-2xl hover:scale-105 active:scale-95 transition-all group border-2 border-white/20">
+                        <div className="flex items-center gap-3">
+                            <div className="relative">
+                                <span className="material-symbols-outlined">shopping_bag</span>
+                                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-stone-900"></span>
+                            </div>
+                            <span className="font-bold tracking-wide text-sm">Review (2)</span>
+                        </div>
+                    </button>
+                </div>
+            </ScrollAnimation>
+
+            {/* Booking Modal */}
+            <ServiceBookingModal
+                isOpen={isBookingModalOpen}
+                onClose={() => setIsBookingModalOpen(false)}
+                service={selectedService}
+            />
+        </div>
+    );
+};
+
+export default BookingService;
