@@ -36,7 +36,21 @@ const Payments = lazy(() => import("./pages/admin/Payments"));
 
 // Family Pages (Lazy Loaded)
 const FamilyLayout = lazy(() => import("./components/layout/FamilyLayout"));
+const FamilyDashboard = lazy(() => import("./pages/Family/FamilyDashboard"));
 const FamilyWelcome = lazy(() => import("./pages/Family/Welcome"));
+const FamilyPatientList = lazy(() => import("./pages/Family/PatientList"));
+const FamilySchedule = lazy(() => import("./pages/Family/CareSchedule"));
+const FamilyBooking = lazy(() => import("./pages/Family/BookingService"));
+const FamilyRequests = lazy(() => import("./pages/Family/Request"));
+const FamilyContract = lazy(() => import("./pages/Family/FamilyContract"));
+const FamilyPayment = lazy(() => import("./pages/Family/FamilyPayment"));
+const FamilyReport = lazy(() => import("./pages/Family/CareReport"));
+const FamilyPatientDetail = lazy(() => import("./pages/Family/PatientDetail"));
+const FamilyShiftDetail = lazy(() => import("./pages/Family/ShiftDetail"));
+const FamilyHealthReportDetail = lazy(() => import("./pages/Family/HealthReportDetail"));
+const FamilyCreateRequest = lazy(() => import("./pages/Family/CreateRequest"));
+const FamilyCreateContract = lazy(() => import("./pages/Family/CreateContract"));
+const FamilyProfile = lazy(() => import("./pages/Family/FamilyProfile"));
 
 
 const queryClient = new QueryClient();
@@ -80,6 +94,20 @@ const App = () => (
               {/* Family Routes */}
               <Route path="/family" element={<FamilyLayout />}>
                 <Route index element={<FamilyWelcome />} />
+                <Route path="dashboard" element={<FamilyDashboard />} />
+                <Route path="patients" element={<FamilyPatientList />} />
+                <Route path="schedule" element={<FamilySchedule />} />
+                <Route path="book" element={<FamilyBooking />} />
+                <Route path="requests" element={<FamilyRequests />} />
+                <Route path="contracts" element={<FamilyContract />} />
+                <Route path="payments" element={<FamilyPayment />} />
+                <Route path="reports" element={<FamilyReport />} />
+                <Route path="patients/detail/:id" element={<FamilyPatientDetail />} />
+                <Route path="schedule/detail/:id" element={<FamilyShiftDetail />} />
+                <Route path="reports/detail/:id" element={<FamilyHealthReportDetail />} />
+                <Route path="requests/new" element={<FamilyCreateRequest />} />
+                <Route path="contracts/new" element={<FamilyCreateContract />} />
+                <Route path="profile" element={<FamilyProfile />} />
               </Route>
 
               {/* Catch-all */}
