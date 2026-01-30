@@ -1,164 +1,238 @@
-import React from 'react';
-import { AreaChart, Area, XAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import { chartData } from '../../data/Family/report';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import ScrollAnimation from "@/components/ui/scroll-animation";
+
+const REPORTS_DATA = [
+    {
+        id: 1,
+        name: "Robert Jenkins",
+        type: "Weekly Vital Summary",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuACzNI-AJql1WfdghgRXth_vB8ICMd7_n-ThzQSDvR-mz-wciRS4bf-Uq8pObMhv11e1AxMNXqH1yAIfZeucNX__G4RjF5GqMt4pjZixJWytEtn6fiOz3ITMzwyhEQGMGr5-WxMT2D6WB2u6krSVkpWm4ufvcdoNdyuxmqegYAbZjqzA4PSsYpmYpY6sy426SDTB4fP-YjGuRmoJKQCuYRJintXdKAH9lM3VAIOj06iT0jl7H_Mmx7117nNvrDLMYC0-ARcPKEwAx-m",
+        period: "Oct 16 - Oct 23, 2023",
+        status: "Stable",
+        statusEmoji: "😊",
+        statusColor: "emerald",
+        score: 92,
+        curvePath: "M0,30 C20,25 40,5 60,15 S80,25 100,10",
+        curveColor: "#10b981",
+        sidestripColor: "bg-emerald-300"
+    },
+    {
+        id: 2,
+        name: "Eleanor Jenkins",
+        type: "Hypertension Log",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDG2TcLFomEjFb5KddJkETS8rgrk0sXvCV1r-biHOlg_0OtstDtcFrYCiGjDQgPSA4C1GYaKvD6xLHqQ29ZxwKB2-qfTZt0R771pEk-Lp-Li3Y_HaGvjyLy5VASFVNN3fnb56OAQqrYgGzZGBXq4VKieQyl140B4dqnBeoCo7laKVr3VHVgVe2Jn2BsttftBZeA0NwPYrVkgTSf_Jq_2uKb6KwpjZ_7cg0pwYNFf1RSjyacTwYQHEzBn_PtRdiOzzdI3OZnNJnsTIfo",
+        period: "Oct 16 - Oct 23, 2023",
+        status: "Warning",
+        statusEmoji: "😐",
+        statusColor: "amber",
+        score: 78,
+        curvePath: "M0,10 C20,15 40,35 60,20 S80,10 100,25",
+        curveColor: "#f59e0b",
+        sidestripColor: "bg-amber-300"
+    },
+    {
+        id: 3,
+        name: "Robert Jenkins",
+        type: "Monthly Progress Report",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuACzNI-AJql1WfdghgRXth_vB8ICMd7_n-ThzQSDvR-mz-wciRS4bf-Uq8pObMhv11e1AxMNXqH1yAIfZeucNX__G4RjF5GqMt4pjZixJWytEtn6fiOz3ITMzwyhEQGMGr5-WxMT2D6WB2u6krSVkpWm4ufvcdoNdyuxmqegYAbZjqzA4PSsYpmYpY6sy426SDTB4fP-YjGuRmoJKQCuYRJintXdKAH9lM3VAIOj06iT0jl7H_Mmx7117nNvrDLMYC0-ARcPKEwAx-m",
+        period: "Oct 09 - Oct 15, 2023",
+        status: "Incident",
+        statusEmoji: "😟",
+        statusColor: "rose",
+        score: 45,
+        curvePath: "M0,5 C30,15 70,45 100,35",
+        curveColor: "#f43f5e",
+        sidestripColor: "bg-rose-300"
+    }
+];
 
 const CareReport = () => {
     return (
-        <div className="space-y-10 animate-fade-in-up pb-12 font-['Public_Sans']">
-            {/* Blue Header Banner */}
+        <div className="space-y-6 pb-12 font-manrope">
+            {/* Header Section */}
             <ScrollAnimation animation="fade-in">
-                <div className="bg-[#99C5D3] rounded-[2.5rem] p-8 md:p-10 text-white shadow-xl shadow-[#99C5D3]/20 relative overflow-hidden flex flex-col md:flex-row justify-between items-end gap-6">
-                    <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
-                    <div className="relative z-10">
-                        <div className="flex items-center gap-2 mb-2">
-                            <span className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/20">
-                                <span className="material-symbols-outlined text-sm">monitor_heart</span>
-                            </span>
-                            <span className="text-xs font-bold uppercase tracking-widest text-white/90">Wellness Tracking</span>
-                        </div>
-                        <h1 className="text-3xl md:text-4xl font-bold tracking-tight">Family Health Reports</h1>
-                        <p className="text-white/80 font-medium mt-1 max-w-lg">Keep track of your family's wellness journey with detailed analytics.</p>
+                <header className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-8">
+                    <div>
+                        <h1 className="text-3xl font-extrabold text-[#5fa5ba] dark:text-white tracking-tight">Family Health Reports</h1>
+                        <p className="text-stone-500 font-medium">Keep track of your family's wellness journey.</p>
                     </div>
-                </div>
+                    <div className="flex items-center gap-4">
+                        <div className="hidden sm:flex h-12 items-center gap-3 px-4 rounded-2xl bg-white dark:bg-stone-900 border border-[#5fa5ba]/20 shadow-sm">
+                            <span className="material-symbols-outlined text-[#5fa5ba]">calendar_month</span>
+                            <span className="text-sm font-bold text-stone-700 dark:text-stone-300">Oct 24, 2023</span>
+                        </div>
+                    </div>
+                </header>
             </ScrollAnimation>
 
-            {/* Filters */}
-            <div className="bg-white p-3 rounded-[2rem] border border-stone-100 flex flex-wrap items-center gap-4 shadow-sm">
-                <div className="relative flex-1 min-w-[280px]">
-                    <span className="material-symbols-outlined absolute left-5 top-1/2 -translate-y-1/2 text-stone-400">search</span>
-                    <input className="w-full pl-14 pr-6 py-4 bg-[#F8FAFC] border-none rounded-3xl focus:ring-2 focus:ring-[#99C5D3] text-sm font-medium placeholder:text-stone-400 outline-none transition-all" placeholder="Search by name or report type..." type="text" />
-                </div>
-                <div className="flex items-center gap-3 px-2 w-full md:w-auto">
-                    <div className="relative w-full md:w-auto">
-                        <select className="appearance-none w-full bg-[#F8FAFC] border-none rounded-3xl text-sm font-bold focus:ring-2 focus:ring-[#99C5D3] py-4 pl-6 pr-10 outline-none cursor-pointer text-stone-700">
-                            <option>Everyone</option>
-                            <option>Robert Jenkins</option>
-                            <option>Eleanor Jenkins</option>
-                        </select>
-                        <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none">expand_more</span>
+            {/* Search and Filters */}
+            <ScrollAnimation animation="fade-up" delay={0.1}>
+                <section className="mb-10">
+                    <div className="bg-white/50 dark:bg-stone-900/50 backdrop-blur-sm p-3 rounded-[2rem] border border-[#5fa5ba]/20 flex flex-wrap items-center gap-4">
+                        <div className="relative flex-1 min-w-[300px]">
+                            <span className="material-symbols-outlined absolute left-5 top-1/2 -translate-y-1/2 text-[#5fa5ba]/40">search</span>
+                            <input
+                                className="w-full pl-14 pr-6 py-4 bg-white dark:bg-stone-900 border-none rounded-3xl focus:ring-4 focus:ring-[#5fa5ba]/10 text-sm font-medium placeholder:text-stone-400 shadow-sm outline-none"
+                                placeholder="Search by name or report type..."
+                                type="text"
+                            />
+                        </div>
+                        <div className="flex items-center gap-3 px-2">
+                            <select className="bg-white dark:bg-stone-900 border-none rounded-3xl text-sm font-bold focus:ring-4 focus:ring-[#5fa5ba]/10 py-4 px-6 shadow-sm appearance-none cursor-pointer outline-none text-stone-700 dark:text-stone-300">
+                                <option>Everyone</option>
+                                <option>Robert Jenkins</option>
+                                <option>Eleanor Jenkins</option>
+                            </select>
+                            <button className="flex items-center gap-2 px-6 py-4 bg-[#5fa5ba] text-white hover:bg-[#4d8ca0] rounded-3xl text-sm font-bold transition-all shadow-lg shadow-[#5fa5ba]/20">
+                                <span className="material-symbols-outlined text-lg">tune</span>
+                                <span className="hidden sm:inline">Apply Filters</span>
+                            </button>
+                        </div>
                     </div>
-                    <button className="flex items-center justify-center gap-2 px-6 py-4 bg-[#5fa5ba] text-white hover:bg-[#4d8ca0] rounded-3xl text-sm font-bold transition-all shadow-lg shadow-[#5fa5ba]/20 w-auto whitespace-nowrap">
-                        <span className="material-symbols-outlined text-lg">tune</span>
-                        <span className="hidden sm:inline">Apply Filters</span>
-                    </button>
-                </div>
+                </section>
+            </ScrollAnimation>
+
+            {/* Report Cards List */}
+            <div className="space-y-6 mb-12">
+                {REPORTS_DATA.map((report, index) => (
+                    <ScrollAnimation key={report.id} animation="fade-in" delay={0.1 * (index + 1)}>
+                        <div className="group bg-white dark:bg-stone-900 p-8 rounded-[2rem] border border-[#5fa5ba]/10 hover:border-[#5fa5ba]/30 transition-all shadow-sm flex flex-col lg:flex-row lg:items-center gap-8 cursor-pointer relative overflow-hidden">
+                            <div className={`absolute top-0 left-0 w-2 h-full ${report.sidestripColor}`}></div>
+
+                            {/* User Info */}
+                            <div className="flex items-center gap-5 min-w-[240px]">
+                                <div className="relative">
+                                    <img
+                                        alt={report.name}
+                                        className="w-16 h-16 rounded-3xl object-cover ring-4 ring-[#5fa5ba]/10"
+                                        src={report.image}
+                                    />
+                                    <div className={`absolute -bottom-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center border-4 border-white dark:border-stone-900 ${report.statusColor === 'emerald' ? 'bg-emerald-100 text-emerald-600' :
+                                        report.statusColor === 'amber' ? 'bg-amber-100 text-amber-600' :
+                                            'bg-rose-100 text-rose-600'
+                                        }`}>
+                                        <span className="material-symbols-outlined text-sm font-bold">
+                                            {report.statusColor === 'emerald' ? 'check' :
+                                                report.statusColor === 'amber' ? 'priority_high' : 'close'}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-extrabold text-stone-900 dark:text-white">{report.name}</h3>
+                                    <p className="text-sm text-stone-400 font-medium">{report.type}</p>
+                                </div>
+                            </div>
+
+                            {/* Stats Grid */}
+                            <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-8">
+                                <div>
+                                    <p className="text-[10px] uppercase tracking-widest font-bold text-stone-400 mb-2">Period</p>
+                                    <p className="text-sm font-bold text-stone-700 dark:text-stone-300 flex items-center gap-2">
+                                        <span className="material-symbols-outlined text-[#5fa5ba] text-sm">calendar_today</span>
+                                        {report.period}
+                                    </p>
+                                </div>
+                                <div>
+                                    <p className="text-[10px] uppercase tracking-widest font-bold text-stone-400 mb-2">Status</p>
+                                    <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full font-bold text-sm ${report.statusColor === 'emerald' ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400' :
+                                        report.statusColor === 'amber' ? 'bg-amber-50 text-amber-700 dark:bg-amber-900/20 dark:text-amber-400' :
+                                            'bg-rose-50 text-rose-700 dark:bg-rose-900/20 dark:text-rose-400'
+                                        }`}>
+                                        <span className="text-lg">{report.statusEmoji}</span>
+                                        {report.status}
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-4">
+                                    <div className="flex-1">
+                                        <p className="text-[10px] uppercase tracking-widest font-bold text-stone-400 mb-1">Health Score</p>
+                                        <div className="flex items-center gap-3">
+                                            <div className="flex-1 h-2 bg-[#5fa5ba]/10 rounded-full overflow-hidden">
+                                                <div
+                                                    className={`h-full rounded-full ${report.statusColor === 'emerald' ? 'bg-emerald-400' :
+                                                        report.statusColor === 'amber' ? 'bg-amber-400' : 'bg-rose-400'
+                                                        }`}
+                                                    style={{ width: `${report.score}%` }}
+                                                ></div>
+                                            </div>
+                                            <span className={`text-lg font-black ${report.statusColor === 'emerald' ? 'text-emerald-600' :
+                                                report.statusColor === 'amber' ? 'text-amber-600' : 'text-rose-600'
+                                                }`}>{report.score}%</span>
+                                        </div>
+                                    </div>
+                                    <div className="w-20 h-10 hidden md:block opacity-60">
+                                        <svg className="w-full h-full" viewBox="0 0 100 40">
+                                            <path
+                                                d={report.curvePath}
+                                                fill="none"
+                                                stroke={report.curveColor}
+                                                strokeLinecap="round"
+                                                strokeWidth="4"
+                                            ></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="flex items-center justify-end">
+                                <Link to={`/family/reports/detail/${report.id}`} className="w-12 h-12 rounded-2xl bg-[#5fa5ba]/10 text-[#5fa5ba] flex items-center justify-center group-hover:bg-[#5fa5ba] group-hover:text-white transition-all">
+                                    <span className="material-symbols-outlined">arrow_forward</span>
+                                </Link>
+                            </div>
+                        </div>
+                    </ScrollAnimation>
+                ))}
             </div>
 
-            {/* Main Report Detail Card */}
-            <ScrollAnimation animation="fade-up">
-                <div className="bg-white rounded-[2.5rem] p-8 lg:p-12 shadow-sm border border-stone-100">
-                    <div className="flex flex-col md:flex-row items-center gap-10 mb-10 pb-10 border-b border-stone-50">
-                        <div className="shrink-0 text-center md:text-left">
-                            <div className="inline-flex items-center gap-2 bg-[#E0F2F1] text-[#00695C] px-6 py-2.5 rounded-full font-bold text-sm uppercase tracking-widest mb-4 border border-[#B2EBF2]">
-                                <span className="material-symbols-outlined fill text-xl">verified_user</span>
-                                Stable
-                            </div>
-                            <h3 className="text-3xl font-bold text-stone-900">Health Summary</h3>
-                            <p className="text-stone-500 font-medium mt-1">Care Period: Oct 17 - 24</p>
-                        </div>
-                        <div className="h-px w-full md:w-px md:h-16 bg-stone-100"></div>
-                        <div className="flex-1">
-                            <p className="text-lg text-stone-700 leading-relaxed font-medium">
-                                John has maintained excellent stability this week. All vitals are within target ranges, and his appetite has improved significantly. No medication adjustments were necessary, and he has been consistently active during the day.
-                            </p>
-                        </div>
+            {/* Pagination */}
+            <ScrollAnimation animation="fade-up" delay={0.4}>
+                <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-16">
+                    <div className="text-sm font-bold text-stone-400">
+                        Showing <span className="text-[#5fa5ba] font-black">3</span> of <span className="text-stone-900 dark:text-white font-black">24</span> reports
                     </div>
-
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                        {/* Blood Pressure Chart */}
-                        <div className="space-y-6">
-                            <div className="flex justify-between items-end">
-                                <div>
-                                    <p className="text-sm font-bold text-stone-400 uppercase tracking-wider">Blood Pressure</p>
-                                    <p className="text-2xl font-black text-stone-900">118/78 <span className="text-sm font-normal text-stone-400 ml-1">mmHg (Avg)</span></p>
-                                </div>
-                                <div className="bg-[#E0F2F1] text-[#00695C] px-3 py-1 rounded-lg text-xs font-bold border border-[#B2EBF2]">Optimal</div>
-                            </div>
-                            <div className="h-[200px] w-full bg-[#FAFAFA] rounded-2xl p-4 border border-stone-50">
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <AreaChart data={chartData}>
-                                        <defs>
-                                            <linearGradient id="colorBp" x1="0" y1="0" x2="0" y2="1">
-                                                <stop offset="5%" stopColor="#5fa5ba" stopOpacity={0.2} />
-                                                <stop offset="95%" stopColor="#5fa5ba" stopOpacity={0} />
-                                            </linearGradient>
-                                        </defs>
-                                        <Area type="monotone" dataKey="bp" stroke="#5fa5ba" fillOpacity={1} fill="url(#colorBp)" strokeWidth={3} />
-                                        <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 10, fontWeight: 'bold', fill: '#9ca3af' }} />
-                                        <Tooltip
-                                            contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
-                                            itemStyle={{ color: '#5fa5ba', fontWeight: 'bold' }}
-                                        />
-                                    </AreaChart>
-                                </ResponsiveContainer>
-                            </div>
-                        </div>
-
-                        {/* Heart Rate Chart */}
-                        <div className="space-y-6">
-                            <div className="flex justify-between items-end">
-                                <div>
-                                    <p className="text-sm font-bold text-stone-400 uppercase tracking-wider">Heart Rate</p>
-                                    <p className="text-2xl font-black text-stone-900">72 <span className="text-sm font-normal text-stone-400 ml-1">BPM (Avg)</span></p>
-                                </div>
-                                <div className="bg-[#E0F2F1] text-[#00695C] px-3 py-1 rounded-lg text-xs font-bold border border-[#B2EBF2]">Stable</div>
-                            </div>
-                            <div className="h-[200px] w-full bg-[#FAFAFA] rounded-2xl p-4 border border-stone-50">
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <AreaChart data={chartData}>
-                                        <defs>
-                                            <linearGradient id="colorHr" x1="0" y1="0" x2="0" y2="1">
-                                                <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.2} />
-                                                <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
-                                            </linearGradient>
-                                        </defs>
-                                        <Area type="monotone" dataKey="hr" stroke="#3b82f6" fillOpacity={1} fill="url(#colorHr)" strokeWidth={3} />
-                                        <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 10, fontWeight: 'bold', fill: '#9ca3af' }} />
-                                        <Tooltip
-                                            contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
-                                            itemStyle={{ color: '#3b82f6', fontWeight: 'bold' }}
-                                        />
-                                    </AreaChart>
-                                </ResponsiveContainer>
-                            </div>
-                        </div>
+                    <div className="flex items-center gap-3">
+                        <button className="w-12 h-12 rounded-2xl border border-[#5fa5ba]/20 flex items-center justify-center text-stone-400 hover:bg-[#5fa5ba]/5 hover:text-[#5fa5ba] transition-all bg-white dark:bg-stone-900">
+                            <span className="material-symbols-outlined">chevron_left</span>
+                        </button>
+                        <button className="w-12 h-12 rounded-2xl bg-[#5fa5ba] text-white font-bold shadow-lg shadow-[#5fa5ba]/20">1</button>
+                        <button className="w-12 h-12 rounded-2xl bg-white dark:bg-stone-900 border border-[#5fa5ba]/20 text-stone-900 dark:text-white font-bold hover:bg-[#5fa5ba]/5 transition-all">2</button>
+                        <button className="w-12 h-12 rounded-2xl bg-white dark:bg-stone-900 border border-[#5fa5ba]/20 text-stone-900 dark:text-white font-bold hover:bg-[#5fa5ba]/5 transition-all">3</button>
+                        <button className="w-12 h-12 rounded-2xl border border-[#5fa5ba]/20 flex items-center justify-center text-stone-400 hover:bg-[#5fa5ba]/5 hover:text-[#5fa5ba] transition-all bg-white dark:bg-stone-900">
+                            <span className="material-symbols-outlined">chevron_right</span>
+                        </button>
                     </div>
                 </div>
             </ScrollAnimation>
 
-            {/* Insights Section */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pb-8">
-                <ScrollAnimation animation="fade-up" delay={0.1}>
-                    <div className="bg-emerald-50/50 p-8 rounded-[2rem] border border-emerald-100 flex flex-col gap-4 h-full hover:shadow-lg transition-all hover:bg-emerald-50">
-                        <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-emerald-500 shadow-sm border border-emerald-100/50">
+            {/* Bottom Widgets */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+                <ScrollAnimation animation="fade-up" delay={0.5} className="h-full">
+                    <div className="bg-[#5fa5ba]/5 p-8 rounded-[2rem] border border-[#5fa5ba]/20 flex flex-col gap-4 h-full">
+                        <div className="w-12 h-12 bg-white dark:bg-stone-900 rounded-2xl flex items-center justify-center text-[#5fa5ba] shadow-sm">
                             <span className="material-symbols-outlined font-bold text-xl">trending_up</span>
                         </div>
-                        <h4 className="text-lg font-bold text-stone-900">Health Trend</h4>
-                        <p className="text-sm text-stone-600 font-medium leading-relaxed">Family health scores rose <span className="text-emerald-600 font-black">+4%</span> this month. Keep up the activity levels!</p>
+                        <h4 className="text-lg font-bold text-stone-900 dark:text-white">Health Trend</h4>
+                        <p className="text-sm text-stone-600 dark:text-stone-400 font-medium leading-relaxed">Family health scores rose <span className="text-emerald-600 font-black">+4%</span> this month. Keep up the activity levels!</p>
                     </div>
                 </ScrollAnimation>
 
-                <ScrollAnimation animation="fade-up" delay={0.2}>
-                    <div className="bg-red-500 p-8 rounded-[2rem] border border-red-400 flex flex-col gap-4 h-full shadow-lg shadow-red-500/20 text-white relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-xl -translate-y-1/2 translate-x-1/2"></div>
-                        <div className="w-12 h-12 bg-white/20 backdrop-blur rounded-2xl flex items-center justify-center text-white shadow-sm border border-white/30 relative z-10">
-                            <span className="material-symbols-outlined font-bold text-xl">warning</span>
+                <ScrollAnimation animation="fade-up" delay={0.6} className="h-full">
+                    <div className="bg-amber-50/50 dark:bg-amber-900/10 p-8 rounded-[2rem] border border-amber-100 dark:border-amber-900/30 flex flex-col gap-4 h-full">
+                        <div className="w-12 h-12 bg-white dark:bg-stone-900 rounded-2xl flex items-center justify-center text-amber-500 shadow-sm">
+                            <span className="material-symbols-outlined font-bold text-xl">lightbulb</span>
                         </div>
-                        <div className="relative z-10">
-                            <h4 className="text-lg font-black mb-1">Attention Needed</h4>
-                            <p className="text-sm text-white/90 font-medium leading-relaxed">Eleanor's sodium levels are <span className="font-black bg-white/20 px-1 rounded">Critical</span>. Please review the diet plan immediately.</p>
-                        </div>
+                        <h4 className="text-lg font-bold text-stone-900 dark:text-white">Smart Alert</h4>
+                        <p className="text-sm text-stone-600 dark:text-stone-400 font-medium leading-relaxed">Eleanor's recent reports show a slight BP spike. Consider checking her sodium intake.</p>
                     </div>
                 </ScrollAnimation>
 
-                <ScrollAnimation animation="fade-up" delay={0.3}>
-                    <div className="bg-[#E0F2F1]/50 p-8 rounded-[2rem] border border-[#B2EBF2] flex flex-col gap-4 h-full hover:shadow-lg transition-all hover:bg-[#E0F2F1]">
-                        <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-[#5fa5ba] shadow-sm border border-[#B2EBF2]/50">
+                <ScrollAnimation animation="fade-up" delay={0.7} className="h-full">
+                    <div className="bg-[#5fa5ba]/5 p-8 rounded-[2rem] border border-[#5fa5ba]/20 flex flex-col gap-4 h-full">
+                        <div className="w-12 h-12 bg-white dark:bg-stone-900 rounded-2xl flex items-center justify-center text-[#5fa5ba] shadow-sm">
                             <span className="material-symbols-outlined font-bold text-xl">verified</span>
                         </div>
-                        <h4 className="text-lg font-bold text-stone-900">Daily Compliance</h4>
-                        <p className="text-sm text-stone-600 font-medium leading-relaxed">Excellent! <span className="text-[#5fa5ba] font-black">98%</span> of daily checks were logged. Your family care is on track.</p>
+                        <h4 className="text-lg font-bold text-stone-900 dark:text-white">Daily Compliance</h4>
+                        <p className="text-sm text-stone-600 dark:text-stone-400 font-medium leading-relaxed">Excellent! <span className="text-[#5fa5ba] font-black">98%</span> of daily checks were logged. Your family care is on track.</p>
                     </div>
                 </ScrollAnimation>
             </div>

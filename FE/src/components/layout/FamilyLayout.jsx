@@ -97,7 +97,7 @@ const FamilyLayout = () => {
                         </Link>
                     </div>
                 </nav>
-                <div className="p-8 md:p-12 w-full">
+                <div className="px-6 py-4 md:px-12 md:py-6 w-full">
                     <Outlet context={[profileImage, setProfileImage]} />
                 </div>
             </div>

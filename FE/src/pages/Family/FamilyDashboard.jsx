@@ -6,7 +6,7 @@ import ScrollAnimation from "@/components/ui/scroll-animation";
 
 const FamilyDashboard = () => {
     return (
-        <div className="font-['Public_Sans'] space-y-6 pb-12 pt-4">
+        <div className="font-['Public_Sans'] space-y-6 pb-12">
 
             {/* 1. Header & Quick Stats Row */}
             <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
