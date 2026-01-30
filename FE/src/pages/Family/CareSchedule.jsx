@@ -136,6 +136,9 @@ const CareSchedule = () => {
                                                     <div className="hidden md:flex flex-col min-w-0">
                                                         <span className="text-[10px] font-bold opacity-70 leading-tight">{event.time || '09:00 AM'}</span>
                                                         <span className="text-[11px] font-bold truncate leading-tight">{event.name}</span>
+                                                        {event.patient && (
+                                                            <span className="text-[9px] text-stone-500 truncate leading-tight mt-0.5">For: {event.patient}</span>
+                                                        )}
                                                     </div>
                                                 </div>
                                             )}
